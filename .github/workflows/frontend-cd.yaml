@@ -108,6 +108,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: frontend
         run: |
+          cd k8s
           ${{secrets.KUBECONFIG}} > kubeconfig.yaml
           kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
           kustomize k8s | kubectl apply -f -
