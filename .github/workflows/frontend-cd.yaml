@@ -106,7 +106,7 @@ jobs:
       - name: Deploy
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: backend
+          REPOSITORY: frontend
         run: |
           ${{secrets.KUBECONFIG}} > kubeconfig.yaml
           kubectl kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
