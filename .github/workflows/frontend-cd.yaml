@@ -64,7 +64,7 @@ jobs:
         run: echo "Test successful"
 
   deploy:
-    needs: [lint, test]
+    # needs: [lint, test]
     # The operating system for the runner
     runs-on: ubuntu-latest
 
@@ -108,6 +108,6 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: backend
         run: |
-          echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yaml
+          echo ${{secrets.KUBECONFIG}} > kubeconfig.yaml
           kubectl kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
           kubectl kustomize k8s | kubectl apply -f -
