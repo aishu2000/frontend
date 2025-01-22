@@ -112,5 +112,6 @@ jobs:
         run: |
           cd k8s
           echo -e "${{secrets.KUBECONFIG}}" > kubeconfig.yaml
+          cat kubeconfig.yaml
           kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
           kustomize build | kubectl apply -f -
