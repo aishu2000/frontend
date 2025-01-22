@@ -114,5 +114,5 @@ jobs:
           echo "${{vars.KUBECONFIG}}" > kubeconfig.yaml
           cat kubeconfig.yaml
           kubectl version --kubeconfig=kubeconfig.yaml
-          kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
-          kustomize build | kubectl apply -f -
+          kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG --kubeconfig .kube/config 
+          kustomize build | kubectl apply --kubeconfig .kube/config -f -
