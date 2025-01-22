@@ -13,8 +13,6 @@ on:
     branches:
     - main
 
-  push:
-
 # Jobs defined in the workflow
 jobs:
   lint:
@@ -66,7 +64,7 @@ jobs:
         run: echo "Test successful"
 
   deploy:
-    # needs: [lint, test]
+    needs: [lint, test]
     # The operating system for the runner
     runs-on: ubuntu-latest
 
@@ -111,8 +109,6 @@ jobs:
           REPOSITORY: frontend
         run: |
           cd k8s
-          echo "${{vars.KUBECONFIG}}" > kubeconfig.yaml
-          cat kubeconfig.yaml
-          kubectl version --kubeconfig=kubeconfig.yaml
+          echo "${{secrets.KUBECONFIG}}" > kubeconfig.yaml
           kustomize edit set image frontend=$REGISTRY/$REPOSITORY:$IMAGE_TAG
           kustomize build | kubectl apply --kubeconfig=kubeconfig.yaml -f -
